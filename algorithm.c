@@ -1402,9 +1402,6 @@ static algorithm_settings_t algos[] = {
 #if BAIKAL_TYPE & BAIKAL_1751
   { "cryptonight",        ALGO_CRYPTONIGHT,      "", 1,  0x100010001LLU, 0x100010001LLU, 0, 0, 0xFF,   0xFFFFULL, 0x0000ffffUL,  6,            0,       cryptonight_regenhash,             NULL, NULL, gen_hash },
   { "cryptonight-lite",   ALGO_CRYPTONIGHT_LITE, "", (1ULL << 32), (1ULL << 32), (1ULL << 32), 0, 0, 0xFF,   0xFFFFULL, 0x0000ffffUL,  6,      0,		cryptonightlite_regenhash,         NULL,							NULL, gen_hash },
-#endif
-
-#if BAIKAL_TYPE & BAIKAL_1791
   { "blake256r8",         ALGO_BLAKECOIN,        "",            1,             1,           1, 0, 0, 0xFF,   0xFFFFULL, 0x000000ffUL,  0,          128,          blakecoin_regenhash, blakecoin_midstate, blakecoin_prepare_work,   sha256 },
   { "blake256r14",        ALGO_BLAKE,            "",            1,             1,           1, 0, 0, 0xFF,   0xFFFFULL, 0x00000000UL,  0,          128,           blake256_regenhash,  blake256_midstate,  blake256_prepare_work, gen_hash },
   { "decred",             ALGO_DECRED,           "",            1,             1,           1, 0, 0, 0xFF,   0xFFFFULL, 0x00000000UL,  0,            0,             decred_regenhash,    decred_midstate,    decred_prepare_work, gen_hash },
@@ -1486,7 +1483,7 @@ static const char *lookup_algorithm_alias(const char *lookup_alias, uint8_t *nfa
   ALGO_ALIAS_NF("adaptive-nscrypt", "ckolivas", 11);
   ALGO_ALIAS_NF("adaptive-n-scrypt", "ckolivas", 11);
 #ifdef USE_BAIKAL
-#if BAIKAL_TYPE & BAIKAL_1772
+#if BAIKAL_TYPE & BAIKAL_1751
   ALGO_ALIAS("darkcoin",     "x11");
   ALGO_ALIAS("darkcoin-mod", "x11");
   ALGO_ALIAS("quarkcoin",    "quark");
@@ -1501,10 +1498,6 @@ static const char *lookup_algorithm_alias(const char *lookup_alias, uint8_t *nfa
   ALGO_ALIAS("x11gost",      "x11-gost");
   ALGO_ALIAS("sibcoin",      "x11-gost");
   ALGO_ALIAS("sibcoin-mod",  "x11-gost");
-  //#endif 0 Removed to allow test of other algos
-#endif
-
-#if BAIKAL_TYPE & BAIKAL_1791
   ALGO_ALIAS("vcash",        "vanilla");
   ALGO_ALIAS("blakecoin",    "blake256r8");
   ALGO_ALIAS("blake2b",      "sia");
@@ -1593,7 +1586,7 @@ bool cmp_algorithm(const algorithm_t* algo1, const algorithm_t* algo2)
 int to_baikal_algorithm(algorithm_type_t type)
 {
     switch (type) {
-#if BAIKAL_TYPE & BAIKAL_1772
+#if BAIKAL_TYPE & BAIKAL_1751
     case ALGO_X11:
         return 0x01;
     case ALGO_QUARK:
@@ -1615,16 +1608,13 @@ int to_baikal_algorithm(algorithm_type_t type)
     case ALGO_VELTOR:
         return 0x0D;
 #endif
-#endif 
+
 
 #if BAIKAL_TYPE & BAIKAL_1751
     case ALGO_CRYPTONIGHT:
         return 0x20;
     case ALGO_CRYPTONIGHT_LITE:
         return 0x22;
-#endif 
-
-#if BAIKAL_TYPE & BAIKAL_1791
     case ALGO_BLAKECOIN:
     case ALGO_VANILLA:
         return 0x30;
